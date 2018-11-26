@@ -9,4 +9,5 @@ public interface Formula {
 
     public boolean evaluate();
 
+
 }

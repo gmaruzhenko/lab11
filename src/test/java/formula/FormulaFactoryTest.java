@@ -18,6 +18,13 @@ public class FormulaFactoryTest {
     }
 
     @Test
+    public void testOr() {
+        assertTrue(FormulaFactory.parse("T | T").evaluate());
+        assertTrue(FormulaFactory.parse("T | F | F").evaluate());
+        assertTrue(FormulaFactory.parse("T | F & T").evaluate());
+    }
+
+    @Test
     public void testOtherLiterals() {
         assertFalse(FormulaFactory.parse("T & true & false & true").evaluate());
     }

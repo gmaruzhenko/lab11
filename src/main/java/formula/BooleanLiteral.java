@@ -11,4 +11,12 @@ public class BooleanLiteral implements Formula {
     public boolean evaluate() {
         return this.value;
     }
+
+    @Override
+    public String toString(){
+        if(value)
+            return "True";
+        else
+            return "False";}
+
 }

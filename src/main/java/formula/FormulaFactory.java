@@ -52,6 +52,13 @@ public class FormulaFactory {
         private Stack<Formula> stack = new Stack<Formula>();
 
         @Override
+        public void exitTerm(FormulaParser.TermContext ctx) {
+            if (ctx.NOT() != null) {
+            Formula not = new Not(stack.pop());
+            stack.push(not);
+        }}
+
+        @Override
         public void exitLiteral(FormulaParser.LiteralContext ctx) {
             Formula literal = new BooleanLiteral(ctx.start.getType() == FormulaLexer.TRUE);
             stack.push(literal);
@@ -65,7 +72,16 @@ public class FormulaFactory {
                 Formula left = stack.pop();
                 Formula and = new And(left, right);
                 stack.push(and);
-            } else {
+            }
+            if (ctx.OR() != null){
+                // we matched the OR rule
+                Formula right = stack.pop();
+                Formula left = stack.pop();
+                Formula or = new Or(left, right);
+                stack.push(or);
+            }
+
+            else {
                 // do nothing, because we just matched a literal and its BooleanLiteral is already on the stack
             }
         }
